@@ -78,7 +78,15 @@
 
 [a-zA-Z_][a-zA-Z0-9_]* return IDENTIFICADOR;
 
-[;,{}()\[\]] return yytext[0];
+[;]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[,]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[{]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[}]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[(]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[)]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[:]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[.]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[::]           {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
 
 . {
   printf("Error: Caracter inesperado '%s' en la línea %d\n", yytext, yylineno);
