@@ -56,20 +56,20 @@
 "union"         {printf("linea %d, palabra reservada: UNION\n" , yylineno); return UNION};
 "variables"     {printf("linea %d, palabra reservada: VARIABLES\n" , yylineno); return VARIABLES};
 
-"="             return ASIG;
-"&="            return AND_ASIG;
-"->"            return FLECHA_DCHA;
-"<-"            return FLECHA_IZDA;
-"/="            return DIV_ASIG;
-"=="            return EQ;
-"%="            return MOD_ASIG;
-"*="            return MULT_ASIG;
-"!="            return NEQ;
-"**="           return POT_ASIG;
-"**"            return POTENCIA;
-"-="            return RESTA_ASIG;
-"+="            return SUMA_ASIG;
-"^="            return XOR_ASIG;
+"="             {printf("linea %d, operador: ASIG\n" , yylineno); return ASIG};
+"&="            {printf("linea %d, operador: AND_ASIG\n" , yylineno); return AND_ASIG};
+"->"            {printf("linea %d, operador: FLECHA_DCHA\n" , yylineno); return FLECHA_DCHA};
+"<-"            {printf("linea %d, operador: FLECHA_IZDA\n" , yylineno); return FLECHA_IZDA};
+"/="            {printf("linea %d, operador: DIV_ASIG\n" , yylineno); return DIV_ASIG};
+"=="            {printf("linea %d, operador: EQ\n" , yylineno); return EQ};
+"%="            {printf("linea %d, operador: MOD_ASIG\n" , yylineno); return MOD_ASIG};
+"*="            {printf("linea %d, operador: MULT_ASIG\n" , yylineno); return MULT_ASIG};
+"!="            {printf("linea %d, operador: NEQ\n" , yylineno); return NEQ};
+"**="           {printf("linea %d, operador: POT_ASIG\n" , yylineno); return POT_ASIG};
+"**"            {printf("linea %d, operador: POTENCIA\n" , yylineno); return POTENCIA};
+"-="            {printf("linea %d, operador: RESTA_ASIG\n" , yylineno); return RESTA_ASIG};
+"+="            {printf("linea %d, operador: SUMA_ASIG\n" , yylineno); return SUMA_ASIG};
+"^="            {printf("linea %d, operador: XOR_ASIG\n" , yylineno); return XOR_ASIG};
 
 [0-9]+            return CTC_ENTERA;
 [0-9]+\.[0-9]+    return CTC_REAL;
