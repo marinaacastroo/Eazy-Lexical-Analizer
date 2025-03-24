@@ -98,13 +98,13 @@
 [.]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
 [::]           {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
 
+%%.*           ; // Comentarios de una sola línea
+%/([^%]|%+[^/])*%/ ; // Comentarios multilínea
+
 . {
   printf("Error: Caracter inesperado '%s' en la línea %d\n", yytext, yylineno);
   return 1;  
 }
-
-"//".*           ;
-"/*"([^*]|\*+[^*/])*"*/" ; 
 
 %%
 
