@@ -3,13 +3,14 @@
 
 %{
 #include <stdio.h>
+#include "eazy.h"  
 %}
 
 %%
 
 [ \t\r\n]+       ; 
 
-// Palabras reservadas
+
 "abstracto"     {printf("linea %d, palabra reservada: ABSTRACTO\n" , yylineno); return ABSTRACTO;}
 "cada"          {printf("linea %d, palabra reservada: CADA\n" , yylineno); return CADA;}
 "cadena"        {printf("linea %d, palabra reservada: CADENA\n" , yylineno); return CADENA;}
@@ -65,7 +66,7 @@
 "union"         {printf("linea %d, palabra reservada: UNION\n" , yylineno); return UNION;}
 "variables"     {printf("linea %d, palabra reservada: VARIABLES\n" , yylineno); return VARIABLES;}
 
-// Operadores
+
 "="             {printf("linea %d, operador: ASIG\n" , yylineno); return ASIG;}
 "&="            {printf("linea %d, operador: AND_ASIG\n" , yylineno); return AND_ASIG;}
 "->"            {printf("linea %d, operador: FLECHA_DCHA\n" , yylineno); return FLECHA_DCHA;}
@@ -81,12 +82,10 @@
 "+="            {printf("linea %d, operador: SUMA_ASIG\n" , yylineno); return SUMA_ASIG;}
 "^="            {printf("linea %d, operador: XOR_ASIG\n" , yylineno); return XOR_ASIG;}
 
-// Constantes enteras
 %[0-7]+         {printf("linea %d, constante entera octal\n" , yylineno); return CTC_ENTERA;}
 %[hH][0-9a-fA-F]+ {printf("linea %d, constante entera hexadecimal\n" , yylineno); return CTC_ENTERA;}
 [0-9]+          {printf("linea %d, constante entera decimal\n" , yylineno); return CTC_ENTERA;}
 
-// Constantes reales
 %[0-7]*,%[0-7]+ {printf("linea %d, constante real octal\n" , yylineno); return CTC_REAL;}
 %[hH][0-9a-fA-F]*,%[0-9a-fA-F]+ {printf("linea %d, constante real hexadecimal\n" , yylineno); return CTC_REAL;}
 [0-9]*,[0-9]+   {printf("linea %d, constante real decimal\n" , yylineno); return CTC_REAL;}
@@ -95,10 +94,8 @@
 %[0-7]+(,[0-7]+)?exp[+-]?%[0-7]+ {printf("linea %d, constante real con exponente octal\n" , yylineno); return CTC_REAL;}
 %[hH][0-9a-fA-F]+(,[0-9a-fA-F]+)?exp[+-]?%[hH][0-9a-fA-F]+ {printf("linea %d, constante real con exponente hexadecimal\n" , yylineno); return CTC_REAL;}
 
-// Constantes de caracteres
 "\"([^\\\"]|\\[fnrt%]|%[0-7]{1,3}|%[hH][0-9a-fA-F]{1,2})\"" {
     int value;
-    // Validar si es un carácter octal
     if (sscanf(yytext, "\"%%%o\"", &value) == 1) {
         if (value > 127) {
             printf("Error: Valor octal fuera de rango en la línea %d: %s\n", yylineno, yytext);
@@ -107,7 +104,6 @@
             return CTC_CARACTER;
         }
     }
-    // Validar si es un carácter hexadecimal
     else if (sscanf(yytext, "\"%%h%x\"", &value) == 1 || sscanf(yytext, "\"%%H%x\"", &value) == 1) {
         if (value > 127) {
             printf("Error: Valor hexadecimal fuera de rango en la línea %d: %s\n", yylineno, yytext);
@@ -116,41 +112,30 @@
             return CTC_CARACTER;
         }
     }
-    // Si no es octal ni hexadecimal, es un carácter válido
     else {
         printf("linea %d, constante de caracter\n", yylineno);
         return CTC_CARACTER;
     }
 }
 
-// Constantes de cadenas
 "\"([^\\\"]|\\[fnrt%]|%[0-7]{1,3}|%[hH][0-9a-fA-F]{1,2}|%\\n)*\"" {
     printf("linea %d, constante de cadena\n", yylineno);
     return CTC_CADENA;
 }
 
-// Identificadores
 [a-zA-Z_][a-zA-Z0-9_]* {printf("linea %d, identificador\n" , yylineno); return IDENTIFICADOR;}
 
-// Delimitadores
-[;]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
-[,]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
-[{]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
-[}]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
-[(]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
-[)]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
-[:]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
-[.]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
-[::]           {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
+[{}();:.,|]|(::)|=> { 
+    printf("linea %d, delimitador: %s\n", yylineno, yytext); 
+    return yytext[0]; 
+}
 
-// Comentarios
-%%.*           ; // Comentarios de una sola línea
-%/([^%]|%+[^/])*%/ ; // Comentarios multilínea
+#\{([^#\{#\}]|\n)*#\} ;
 
-// Caracteres inesperados
+##.* ;
+
 . {
-  printf("Error: Caracter inesperado '%s' en la línea %d\n", yytext, yylineno);
-  return 1;  
+    printf("linea %d, ERROR: %s\n", yylineno, yytext);
 }
 
 %%
