@@ -3,15 +3,14 @@
 
 %{
 #include <stdio.h>
-#include "eazy.h"
 %}
 
 %%
 
 [ \t\r\n]+       ; 
 
+// Palabras reservadas
 "abstracto"     {printf("linea %d, palabra reservada: ABSTRACTO\n" , yylineno); return ABSTRACTO;}
-"and"           {printf("linea %d, palabra reservada: AND\n" , yylineno); return AND;}
 "cada"          {printf("linea %d, palabra reservada: CADA\n" , yylineno); return CADA;}
 "cadena"        {printf("linea %d, palabra reservada: CADENA\n" , yylineno); return CADENA;}
 "caracter"      {printf("linea %d, palabra reservada: CARACTER\n" , yylineno); return CARACTER;}
@@ -35,6 +34,16 @@
 "estructura"    {printf("linea %d, palabra reservada: ESTRUCTURA\n" , yylineno); return ESTRUCTURA;}
 "etiqueta"      {printf("linea %d, palabra reservada: ETIQUETA\n" , yylineno); return ETIQUETA;}
 "excepcion"     {printf("linea %d, palabra reservada: EXCEPCION\n" , yylineno); return EXCEPCION;}
+"fichero"       {printf("linea %d, palabra reservada: FICHERO\n" , yylineno); return FICHERO;}
+"fin"           {printf("linea %d, palabra reservada: FIN\n" , yylineno); return FIN;}
+"final"         {printf("linea %d, palabra reservada: FINAL\n" , yylineno); return FINAL;}
+"funcion"       {printf("linea %d, palabra reservada: FUNCION\n" , yylineno); return FUNCION;}
+"generico"      {printf("linea %d, palabra reservada: GENERICO\n" , yylineno); return GENERICO;}
+"hash"          {printf("linea %d, palabra reservada: HASH\n" , yylineno); return HASH;}
+"hacer"         {printf("linea %d, palabra reservada: HACER\n" , yylineno); return HACER;}
+"importar"      {printf("linea %d, palabra reservada: IMPORTAR\n" , yylineno); return IMPORTAR;}
+"lanza"         {printf("linea %d, palabra reservada: LANZA\n" , yylineno); return LANZA;}
+"mientras"      {printf("linea %d, palabra reservada: MIENTRAS\n" , yylineno); return MIENTRAS;}
 "nada"          {printf("linea %d, palabra reservada: NADA\n" , yylineno); return NADA;}
 "or"            {printf("linea %d, palabra reservada: OR\n" , yylineno); return OR;}
 "otra"          {printf("linea %d, palabra reservada: OTRA\n" , yylineno); return OTRA;}
@@ -56,6 +65,7 @@
 "union"         {printf("linea %d, palabra reservada: UNION\n" , yylineno); return UNION;}
 "variables"     {printf("linea %d, palabra reservada: VARIABLES\n" , yylineno); return VARIABLES;}
 
+// Operadores
 "="             {printf("linea %d, operador: ASIG\n" , yylineno); return ASIG;}
 "&="            {printf("linea %d, operador: AND_ASIG\n" , yylineno); return AND_ASIG;}
 "->"            {printf("linea %d, operador: FLECHA_DCHA\n" , yylineno); return FLECHA_DCHA;}
@@ -71,10 +81,12 @@
 "+="            {printf("linea %d, operador: SUMA_ASIG\n" , yylineno); return SUMA_ASIG;}
 "^="            {printf("linea %d, operador: XOR_ASIG\n" , yylineno); return XOR_ASIG;}
 
+// Constantes enteras
 %[0-7]+         {printf("linea %d, constante entera octal\n" , yylineno); return CTC_ENTERA;}
 %[hH][0-9a-fA-F]+ {printf("linea %d, constante entera hexadecimal\n" , yylineno); return CTC_ENTERA;}
 [0-9]+          {printf("linea %d, constante entera decimal\n" , yylineno); return CTC_ENTERA;}
 
+// Constantes reales
 %[0-7]*,%[0-7]+ {printf("linea %d, constante real octal\n" , yylineno); return CTC_REAL;}
 %[hH][0-9a-fA-F]*,%[0-9a-fA-F]+ {printf("linea %d, constante real hexadecimal\n" , yylineno); return CTC_REAL;}
 [0-9]*,[0-9]+   {printf("linea %d, constante real decimal\n" , yylineno); return CTC_REAL;}
@@ -83,11 +95,44 @@
 %[0-7]+(,[0-7]+)?exp[+-]?%[0-7]+ {printf("linea %d, constante real con exponente octal\n" , yylineno); return CTC_REAL;}
 %[hH][0-9a-fA-F]+(,[0-9a-fA-F]+)?exp[+-]?%[hH][0-9a-fA-F]+ {printf("linea %d, constante real con exponente hexadecimal\n" , yylineno); return CTC_REAL;}
 
-"\"([^\\\"]|\\[fnrt%]|%[0-7]{1,3}|%[hH][0-9a-fA-F]{1,2})\"" {printf("linea %d, constante de caracter\n" , yylineno); return CTC_CARACTER;}
-"\"([^\\\"]|\\[fnrt%]|%[0-7]{1,3}|%[hH][0-9a-fA-F]{1,2}|%\\n)*\"" {printf("linea %d, constante de cadena\n" , yylineno); return CTC_CADENA;}
+// Constantes de caracteres
+"\"([^\\\"]|\\[fnrt%]|%[0-7]{1,3}|%[hH][0-9a-fA-F]{1,2})\"" {
+    int value;
+    // Validar si es un carácter octal
+    if (sscanf(yytext, "\"%%%o\"", &value) == 1) {
+        if (value > 127) {
+            printf("Error: Valor octal fuera de rango en la línea %d: %s\n", yylineno, yytext);
+        } else {
+            printf("linea %d, constante de caracter (octal)\n", yylineno);
+            return CTC_CARACTER;
+        }
+    }
+    // Validar si es un carácter hexadecimal
+    else if (sscanf(yytext, "\"%%h%x\"", &value) == 1 || sscanf(yytext, "\"%%H%x\"", &value) == 1) {
+        if (value > 127) {
+            printf("Error: Valor hexadecimal fuera de rango en la línea %d: %s\n", yylineno, yytext);
+        } else {
+            printf("linea %d, constante de caracter (hexadecimal)\n", yylineno);
+            return CTC_CARACTER;
+        }
+    }
+    // Si no es octal ni hexadecimal, es un carácter válido
+    else {
+        printf("linea %d, constante de caracter\n", yylineno);
+        return CTC_CARACTER;
+    }
+}
 
+// Constantes de cadenas
+"\"([^\\\"]|\\[fnrt%]|%[0-7]{1,3}|%[hH][0-9a-fA-F]{1,2}|%\\n)*\"" {
+    printf("linea %d, constante de cadena\n", yylineno);
+    return CTC_CADENA;
+}
+
+// Identificadores
 [a-zA-Z_][a-zA-Z0-9_]* {printf("linea %d, identificador\n" , yylineno); return IDENTIFICADOR;}
 
+// Delimitadores
 [;]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
 [,]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
 [{]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
@@ -98,9 +143,11 @@
 [.]            {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
 [::]           {printf("linea %d, delimitador\n" , yylineno); return yytext[0];}
 
+// Comentarios
 %%.*           ; // Comentarios de una sola línea
 %/([^%]|%+[^/])*%/ ; // Comentarios multilínea
 
+// Caracteres inesperados
 . {
   printf("Error: Caracter inesperado '%s' en la línea %d\n", yytext, yylineno);
   return 1;  
@@ -109,20 +156,20 @@
 %%
 
 int yywrap() {
-  return 1;
+    return 1;
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    printf("Uso: ./eazy NombreArchivo\n");
-    return 1;
-  }
-  yyin = fopen(argv[1], "r");
-  if (!yyin) {
-    perror("Error al abrir el archivo");
-    return 1;
-  }
-  while (yylex());
-  fclose(yyin);
-  return 0;
+    if (argc < 2) {
+        printf("Uso: ./eazy NombreArchivo\n");
+        return 1;
+    }
+    yyin = fopen(argv[1], "r");
+    if (!yyin) {
+        perror("Error al abrir el archivo");
+        return 1;
+    }
+    while (yylex());
+    fclose(yyin);
+    return 0;
 }
