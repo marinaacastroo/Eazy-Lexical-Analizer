@@ -96,9 +96,32 @@
 \%[0-7]+(,\%[0-7]+)?exp[+-]?\%[0-7]+ {printf("linea %d, constante real con exponente octal: %s\n", yylineno, yytext); return CTC_REAL;}
 \%[hH][0-9a-fA-F]+(,\%[0-9a-fA-F]+)?exp[+-]?\%[hH][0-9a-fA-F]+ {printf("linea %d, constante real con exponente hexadecimal: %s\n", yylineno, yytext); return CTC_REAL;}
 
-"\"([^\\\"]|\\[fnrt\%]|\%[0-7]{1,3}|\%[hH][0-9a-fA-F]{1,2})*\"" {
-    printf("linea %d, constante de cadena: %s\n", yylineno, yytext);
-    return CTC_CADENA;
+"\"([^\\\"]|\\[%\"fnrt]|\\%[0-7]{1,3}|\\%[hH][0-9a-fA-F]{1,2})\"" {
+    int value;
+    if (sscanf(yytext, "\"\\%%%o\"", &value) == 1) { 
+        if (value > 127) {
+            printf("Error: Valor octal fuera de rango en la línea %d: %s\n", yylineno, yytext);
+        } else {
+            printf("linea %d, constante de caracter (octal): %s\n", yylineno, yytext);
+            return CTC_CARACTER;
+        }
+    } else if (sscanf(yytext, "\"\\%%h%x\"", &value) == 1 || sscanf(yytext, "\"\\%%H%x\"", &value) == 1) { // Hexadecimal
+        if (value > 127) {
+            printf("Error: Valor hexadecimal fuera de rango en la línea %d: %s\n", yylineno, yytext);
+        } else {
+            printf("linea %d, constante de caracter (hexadecimal): %s\n", yylineno, yytext);
+            return CTC_CARACTER;
+        }
+    } else if (strlen(yytext) == 3) { 
+        printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
+        return CTC_CARACTER;
+    } else if (strcmp(yytext, "\"\\%%\"") == 0 || strcmp(yytext, "\"\\%n\"") == 0 || strcmp(yytext, "\"\\%r\"") == 0 || 
+               strcmp(yytext, "\"\\%t\"") == 0 || strcmp(yytext, "\"\\%f\"") == 0 || strcmp(yytext, "\"\\%\"") == 0) { // Escapados
+        printf("linea %d, constante de caracter escapado: %s\n", yylineno, yytext);
+        return CTC_CARACTER;
+    } else {
+        printf("Error: Constante de caracter inválida en la línea %d: %s\n", yylineno, yytext);
+    }
 }
 
 '%['"%nrt]'         { printf("linea %d, constante de caracter: %s\n", yylineno, yytext); return CTC_CARACTER; }
