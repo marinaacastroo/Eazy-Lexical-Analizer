@@ -1,5 +1,5 @@
 %option yylineno
-%option case-insensitive
+
 
 %{
 #include <stdio.h>
