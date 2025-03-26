@@ -1,6 +1,5 @@
 %option yylineno
 
-
 %{
 #include <stdio.h>
 #include "eazy.h"  
