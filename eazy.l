@@ -10,7 +10,6 @@
 
 [ \t\r\n]+       ; 
 
-
 (?i:"abstracto")     {printf("linea %d, palabra reservada: ABSTRACTO\n" , yylineno); return ABSTRACTO;}
 (?i:"cada")          {printf("linea %d, palabra reservada: CADA\n" , yylineno); return CADA;}
 (?i:"cadena")        {printf("linea %d, palabra reservada: CADENA\n" , yylineno); return CADENA;}
@@ -66,7 +65,6 @@
 (?i:"union")         {printf("linea %d, palabra reservada: UNION\n" , yylineno); return UNION;}
 (?i:"variables")     {printf("linea %d, palabra reservada: VARIABLES\n" , yylineno); return VARIABLES;}
 
-
 "="             {printf("linea %d, operador: ASIG\n" , yylineno); return ASIG;}
 "&="            {printf("linea %d, operador: AND_ASIG\n" , yylineno); return AND_ASIG;}
 "->"            {printf("linea %d, operador: FLECHA_DCHA\n" , yylineno); return FLECHA_DCHA;}
@@ -82,48 +80,48 @@
 "+="            {printf("linea %d, operador: SUMA_ASIG\n" , yylineno); return SUMA_ASIG;}
 "^="            {printf("linea %d, operador: XOR_ASIG\n" , yylineno); return XOR_ASIG;}
 
-%[0-7]+         {printf("linea %d, constante entera octal\n" , yylineno); return CTC_ENTERA;}
-%[hH][0-9a-fA-F]+ {printf("linea %d, constante entera hexadecimal\n" , yylineno); return CTC_ENTERA;}
-[0-9]+          {printf("linea %d, constante entera decimal\n" , yylineno); return CTC_ENTERA;}
+\%[0-7]+         {printf("linea %d, constante entera octal: %s\n", yylineno, yytext); return CTC_ENTERA;}
+\%[hH][0-9a-fA-F]+ {printf("linea %d, constante entera hexadecimal: %s\n", yylineno, yytext); return CTC_ENTERA;}
+[0-9]+          {printf("linea %d, constante entera decimal: %s\n", yylineno, yytext); return CTC_ENTERA;}
 
-%[0-7]*,%[0-7]+ {printf("linea %d, constante real octal\n" , yylineno); return CTC_REAL;}
-%[hH][0-9a-fA-F]*,%[0-9a-fA-F]+ {printf("linea %d, constante real hexadecimal\n" , yylineno); return CTC_REAL;}
-[0-9]*,[0-9]+   {printf("linea %d, constante real decimal\n" , yylineno); return CTC_REAL;}
+\%[0-7]*,\%[0-7]+ {printf("linea %d, constante real octal: %s\n", yylineno, yytext); return CTC_REAL;}
+\%[hH][0-9a-fA-F]*,\%[0-9a-fA-F]+ {printf("linea %d, constante real hexadecimal: %s\n", yylineno, yytext); return CTC_REAL;}
+[0-9]*,[0-9]+   {printf("linea %d, constante real decimal: %s\n", yylineno, yytext); return CTC_REAL;}
 
-[0-9]+(,[0-9]+)?exp[+-]?[0-9]+ {printf("linea %d, constante real con exponente decimal\n" , yylineno); return CTC_REAL;}
-%[0-7]+(,[0-7]+)?exp[+-]?%[0-7]+ {printf("linea %d, constante real con exponente octal\n" , yylineno); return CTC_REAL;}
-%[hH][0-9a-fA-F]+(,[0-9a-fA-F]+)?exp[+-]?%[hH][0-9a-fA-F]+ {printf("linea %d, constante real con exponente hexadecimal\n" , yylineno); return CTC_REAL;}
+[0-9]+(,[0-9]+)?exp[+-]?[0-9]+ {printf("linea %d, constante real con exponente decimal: %s\n", yylineno, yytext); return CTC_REAL;}
+\%[0-7]+(,\%[0-7]+)?exp[+-]?\%[0-7]+ {printf("linea %d, constante real con exponente octal: %s\n", yylineno, yytext); return CTC_REAL;}
+\%[hH][0-9a-fA-F]+(,\%[0-9a-fA-F]+)?exp[+-]?\%[hH][0-9a-fA-F]+ {printf("linea %d, constante real con exponente hexadecimal: %s\n", yylineno, yytext); return CTC_REAL;}
 
-"\"([^\\\"]|\\[fnrt%]|%[0-7]{1,3}|%[hH][0-9a-fA-F]{1,2})\"" {
+"\"([^\\\"]|\\[fnrt\%]|\%[0-7]{1,3}|\%[hH][0-9a-fA-F]{1,2})\"" {
     int value;
-    if (sscanf(yytext, "\"%%%o\"", &value) == 1) {
+    if (sscanf(yytext, "\"\%%%o\"", &value) == 1) {
         if (value > 127) {
             printf("Error: Valor octal fuera de rango en la línea %d: %s\n", yylineno, yytext);
         } else {
-            printf("linea %d, constante de caracter (octal)\n", yylineno);
+            printf("linea %d, constante de caracter (octal): %s\n", yylineno, yytext);
             return CTC_CARACTER;
         }
     }
-    else if (sscanf(yytext, "\"%%h%x\"", &value) == 1 || sscanf(yytext, "\"%%H%x\"", &value) == 1) {
+    else if (sscanf(yytext, "\"\%%h%x\"", &value) == 1 || sscanf(yytext, "\"\%%H%x\"", &value) == 1) {
         if (value > 127) {
             printf("Error: Valor hexadecimal fuera de rango en la línea %d: %s\n", yylineno, yytext);
         } else {
-            printf("linea %d, constante de caracter (hexadecimal)\n", yylineno);
+            printf("linea %d, constante de caracter (hexadecimal): %s\n", yylineno, yytext);
             return CTC_CARACTER;
         }
     }
     else {
-        printf("linea %d, constante de caracter\n", yylineno);
+        printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
         return CTC_CARACTER;
     }
 }
 
-"\"([^\\\"]|\\[fnrt%]|%[0-7]{1,3}|%[hH][0-9a-fA-F]{1,2}|%\\n)*\"" {
-    printf("linea %d, constante de cadena\n", yylineno);
+"\"([^\\\"]|\\[fnrt\%]|\%[0-7]{1,3}|\%[hH][0-9a-fA-F]{1,2}|\%\\n)*\"" {
+    printf("linea %d, constante de cadena: %s\n", yylineno, yytext);
     return CTC_CADENA;
 }
 
-[a-zA-Z_][a-zA-Z0-9_]* {printf("linea %d, identificador\n" , yylineno); return IDENTIFICADOR;}
+[a-zA-Z_][a-zA-Z0-9_]* {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 
 [{}();:.,|]|(::)|=> { 
     printf("linea %d, delimitador: %s\n", yylineno, yytext); 
@@ -131,7 +129,6 @@
 }
 
 #\{([^#\{#\}]|\n)*#\} ;
-
 ##.* ;
 
 . {
