@@ -2,12 +2,12 @@
 
 %{
 #include <stdio.h>
-#include "eazy.h"  
+#include "eazy.h"
 %}
 
 %%
 
-[ \t\r\n]+       ; 
+[ \t\r\n]+       ;
 
 (?i:"abstracto")     {printf("linea %d, palabra reservada: ABSTRACTO\n" , yylineno); return ABSTRACTO;}
 (?i:"cada")          {printf("linea %d, palabra reservada: CADA\n" , yylineno); return CADA;}
@@ -78,6 +78,11 @@
 "-="            {printf("linea %d, operador: RESTA_ASIG\n" , yylineno); return RESTA_ASIG;}
 "+="            {printf("linea %d, operador: SUMA_ASIG\n" , yylineno); return SUMA_ASIG;}
 "^="            {printf("linea %d, operador: XOR_ASIG\n" , yylineno); return XOR_ASIG;}
+"+"             {printf("linea %d, operador: SUMA\n" , yylineno); return '+';}
+"-"             {printf("linea %d, operador: RESTA\n" , yylineno); return '-';}
+"*"             {printf("linea %d, operador: MULT\n" , yylineno); return '*';}
+"/"             {printf("linea %d, operador: DIV\n" , yylineno); return '/';}
+"%"             {printf("linea %d, operador: MOD\n" , yylineno); return '%';}
 
 \%[0-7]+         {printf("linea %d, constante entera octal: %s\n", yylineno, yytext); return CTC_ENTERA;}
 \%[hH][0-9a-fA-F]+ {printf("linea %d, constante entera hexadecimal: %s\n", yylineno, yytext); return CTC_ENTERA;}
@@ -91,33 +96,23 @@
 \%[0-7]+(,\%[0-7]+)?exp[+-]?\%[0-7]+ {printf("linea %d, constante real con exponente octal: %s\n", yylineno, yytext); return CTC_REAL;}
 \%[hH][0-9a-fA-F]+(,\%[0-9a-fA-F]+)?exp[+-]?\%[hH][0-9a-fA-F]+ {printf("linea %d, constante real con exponente hexadecimal: %s\n", yylineno, yytext); return CTC_REAL;}
 
-"\"([^\\\"]|\\[fnrt\%]|\%[0-7]{1,3}|\%[hH][0-9a-fA-F]{1,2})\"" {
-    int value;
-    if (sscanf(yytext, "\"\%%%o\"", &value) == 1) {
-        if (value > 127) {
-            printf("Error: Valor octal fuera de rango en la línea %d: %s\n", yylineno, yytext);
-        } else {
-            printf("linea %d, constante de caracter (octal): %s\n", yylineno, yytext);
-            return CTC_CARACTER;
-        }
-    }
-    else if (sscanf(yytext, "\"\%%h%x\"", &value) == 1 || sscanf(yytext, "\"\%%H%x\"", &value) == 1) {
-        if (value > 127) {
-            printf("Error: Valor hexadecimal fuera de rango en la línea %d: %s\n", yylineno, yytext);
-        } else {
-            printf("linea %d, constante de caracter (hexadecimal): %s\n", yylineno, yytext);
-            return CTC_CARACTER;
-        }
-    }
-    else {
-        printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
-        return CTC_CARACTER;
-    }
-}
-
-"\"([^\\\"]|\\[fnrt\%]|\%[0-7]{1,3}|\%[hH][0-9a-fA-F]{1,2}|\%\\n)*\"" {
+"\"([^\\\"]|\\[fnrt\%]|\%[0-7]{1,3}|\%[hH][0-9a-fA-F]{1,2})*\"" {
     printf("linea %d, constante de cadena: %s\n", yylineno, yytext);
     return CTC_CADENA;
+}
+
+'%['"%nrt]'         { printf("linea %d, constante de caracter: %s\n", yylineno, yytext); return CTC_CARACTER; }
+'%([01]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])' {
+    printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
+    return CTC_CARACTER;
+}
+'%o[0-3]?[0-7]?[0-7]' {
+    printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
+    return CTC_CARACTER;
+}
+'%x[0-9a-fA-F]?[0-9a-fA-F]' {
+    printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
+    return CTC_CARACTER;
 }
 
 [a-zA-Z_][a-zA-Z0-9_]* {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
