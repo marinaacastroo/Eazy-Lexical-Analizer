@@ -5,6 +5,10 @@
 #include "eazy.h"
 %}
 
+
+IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
+
+
 %%
 
 [ \t\r\n]+       ;
@@ -63,6 +67,9 @@
 (?i:"ultima")        {printf("linea %d, palabra reservada: ULTIMA\n" , yylineno); return ULTIMA;}
 (?i:"union")         {printf("linea %d, palabra reservada: UNION\n" , yylineno); return UNION;}
 (?i:"variables")     {printf("linea %d, palabra reservada: VARIABLES\n" , yylineno); return VARIABLES;}
+
+{IDENTIFICADOR} {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
+
 
 "="             {printf("linea %d, operador: ASIG\n" , yylineno); return ASIG;}
 "&="            {printf("linea %d, operador: AND_ASIG\n" , yylineno); return AND_ASIG;}
@@ -138,7 +145,6 @@
     return CTC_CARACTER;
 }
 
-[a-zA-Z_][a-zA-Z0-9_]* {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 
 [{}();:.,|]|(::)|=> { 
     printf("linea %d, delimitador: %s\n", yylineno, yytext); 
