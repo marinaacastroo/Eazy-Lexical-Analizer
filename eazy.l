@@ -41,6 +41,9 @@ CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"   // Asegura que el valor esté en el r
 
 CADENA  \"([^\n"]|ESCAPADO|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
+DELIMITADOR [():;.\:\:]
+
+
 %%
 
 [ \t\r\n]+       ;
