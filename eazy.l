@@ -106,25 +106,62 @@ DELIMITADOR [():;.\:\:]
 {IDENTIFICADOR} {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 
 
-"="             {printf("linea %d, operador: ASIG\n" , yylineno); return ASIG;}
-"&="            {printf("linea %d, operador: AND_ASIG\n" , yylineno); return AND_ASIG;}
-"->"            {printf("linea %d, operador: FLECHA_DCHA\n" , yylineno); return FLECHA_DCHA;}
-"<-"            {printf("linea %d, operador: FLECHA_IZDA\n" , yylineno); return FLECHA_IZDA;}
-"/="            {printf("linea %d, operador: DIV_ASIG\n" , yylineno); return DIV_ASIG;}
-"=="            {printf("linea %d, operador: EQ\n" , yylineno); return EQ;}
-"%="            {printf("linea %d, operador: MOD_ASIG\n" , yylineno); return MOD_ASIG;}
-"*="            {printf("linea %d, operador: MULT_ASIG\n" , yylineno); return MULT_ASIG;}
-"!="            {printf("linea %d, operador: NEQ\n" , yylineno); return NEQ;}
-"**="           {printf("linea %d, operador: POT_ASIG\n" , yylineno); return POT_ASIG;}
-"**"            {printf("linea %d, operador: POTENCIA\n" , yylineno); return POTENCIA;}
-"-="            {printf("linea %d, operador: RESTA_ASIG\n" , yylineno); return RESTA_ASIG;}
-"+="            {printf("linea %d, operador: SUMA_ASIG\n" , yylineno); return SUMA_ASIG;}
-"^="            {printf("linea %d, operador: XOR_ASIG\n" , yylineno); return XOR_ASIG;}
-"+"             {printf("linea %d, operador: SUMA\n" , yylineno); return '+';}
-"-"             {printf("linea %d, operador: RESTA\n" , yylineno); return '-';}
-"*"             {printf("linea %d, operador: MULT\n" , yylineno); return '*';}
-"/"             {printf("linea %d, operador: DIV\n" , yylineno); return '/';}
-"%"             {printf("linea %d, operador: MOD\n" , yylineno); return '%';}
+
+"+"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"-"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"*"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"/"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
+"mod"          {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return MOD;}
+"**"           {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return POTENCIA;}
+
+"<-"            {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return FLECHA_IZDA;}
+"->"            {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return FLECHA_DCHA;}
+"&"             {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return (int)yytext[0];}
+"|"             {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return (int)yytext[0];}
+"@"             {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return (int)yytext[0];}
+"~"             {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return (int)yytext[0];}
+
+"<"             {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return (int)yytext[0];}
+">"             {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return (int)yytext[0];}
+"<="           {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return LE;}
+">="           {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return GE;}
+"=="           {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return EQ;}
+"!="           {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return NEQ;}
+
+"!"             {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return (int)yytext[0];}
+"&&"           {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return AND;}
+"||"           {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return OR;}
+
+":="           {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG;}
+"+="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return SUMA_ASIG;}
+"-="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return RESTA_ASIG;}
+"*="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return MULT_ASIG;}
+"/="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return DIV_ASIG;}
+"mod="        {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return MOD_ASIG;}
+"**="         {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return POT_ASIG;}
+"<-="         {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return FI_ASIG;}
+"->="         {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return FD_ASIG;}
+"&="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return AND_ASIG;}
+"@="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return XOR_ASIG;}
+"|="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return OR_ASIG;}
+
+"tamano"       {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return TAMANO;}
+"?"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"^"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"^?"           {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return INDIRECCION;}
+"["         {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"]"         {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"{"         {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"}"         {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+
+"::"           {nl(); fprintf(yyout, "operador: %s \n", yytext); return PTOS;}
+
+
+
+
+
+
+
 
 \%[0-7]+         {printf("linea %d, constante entera octal: %s\n", yylineno, yytext); return CTC_ENTERA;}
 \%[hH][0-9a-fA-F]+ {printf("linea %d, constante entera hexadecimal: %s\n", yylineno, yytext); return CTC_ENTERA;}
