@@ -146,6 +146,7 @@ DELIMITADOR [():;.\:\:]
 "|="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return OR_ASIG;}
 
 "tamano"       {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return TAMANO;}
+/* TODO: definir tamano si es en mayusculas entonces es identificador */
 "?"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
 "^"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
 "^?"           {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return INDIRECCION;}
@@ -158,64 +159,15 @@ DELIMITADOR [():;.\:\:]
 
 
 
+/* TODO: Arreglar comentarios */
 
+"#{"
+    BEGIN COMENTARIO;
+<COMENTARIO>.|\n               ;
+<COMENTARIO>"#}"              BEGIN 0;
 
+"##".*                       ;
 
-
-
-\%[0-7]+         {printf("linea %d, constante entera octal: %s\n", yylineno, yytext); return CTC_ENTERA;}
-\%[hH][0-9a-fA-F]+ {printf("linea %d, constante entera hexadecimal: %s\n", yylineno, yytext); return CTC_ENTERA;}
-[0-9]+          {printf("linea %d, constante entera decimal: %s\n", yylineno, yytext); return CTC_ENTERA;}
-
-\%[0-7]*,\%[0-7]+ {printf("linea %d, constante real octal: %s\n", yylineno, yytext); return CTC_REAL;}
-\%[hH][0-9a-fA-F]*,\%[0-9a-fA-F]+ {printf("linea %d, constante real hexadecimal: %s\n", yylineno, yytext); return CTC_REAL;}
-[0-9]*,[0-9]+   {printf("linea %d, constante real decimal: %s\n", yylineno, yytext); return CTC_REAL;}
-
-[0-9]+(,[0-9]+)?exp[+-]?[0-9]+ {printf("linea %d, constante real con exponente decimal: %s\n", yylineno, yytext); return CTC_REAL;}
-\%[0-7]+(,\%[0-7]+)?exp[+-]?\%[0-7]+ {printf("linea %d, constante real con exponente octal: %s\n", yylineno, yytext); return CTC_REAL;}
-\%[hH][0-9a-fA-F]+(,\%[0-9a-fA-F]+)?exp[+-]?\%[hH][0-9a-fA-F]+ {printf("linea %d, constante real con exponente hexadecimal: %s\n", yylineno, yytext); return CTC_REAL;}
-
-"\"([^\\\"]|\\[%\"fnrt]|\\%[0-7]{1,3}|\\%[hH][0-9a-fA-F]{1,2})\"" {
-    int value;
-    if (sscanf(yytext, "\"\\%%%o\"", &value) == 1) { 
-        if (value > 127) {
-            printf("Error: Valor octal fuera de rango en la línea %d: %s\n", yylineno, yytext);
-        } else {
-            printf("linea %d, constante de caracter (octal): %s\n", yylineno, yytext);
-            return CTC_CARACTER;
-        }
-    } else if (sscanf(yytext, "\"\\%%h%x\"", &value) == 1 || sscanf(yytext, "\"\\%%H%x\"", &value) == 1) { // Hexadecimal
-        if (value > 127) {
-            printf("Error: Valor hexadecimal fuera de rango en la línea %d: %s\n", yylineno, yytext);
-        } else {
-            printf("linea %d, constante de caracter (hexadecimal): %s\n", yylineno, yytext);
-            return CTC_CARACTER;
-        }
-    } else if (strlen(yytext) == 3) { 
-        printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
-        return CTC_CARACTER;
-    } else if (strcmp(yytext, "\"\\%%\"") == 0 || strcmp(yytext, "\"\\%n\"") == 0 || strcmp(yytext, "\"\\%r\"") == 0 || 
-               strcmp(yytext, "\"\\%t\"") == 0 || strcmp(yytext, "\"\\%f\"") == 0 || strcmp(yytext, "\"\\%\"") == 0) { // Escapados
-        printf("linea %d, constante de caracter escapado: %s\n", yylineno, yytext);
-        return CTC_CARACTER;
-    } else {
-        printf("Error: Constante de caracter inválida en la línea %d: %s\n", yylineno, yytext);
-    }
-}
-
-'%['"%nrt]'         { printf("linea %d, constante de caracter: %s\n", yylineno, yytext); return CTC_CARACTER; }
-'%([01]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])' {
-    printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
-    return CTC_CARACTER;
-}
-'%o[0-3]?[0-7]?[0-7]' {
-    printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
-    return CTC_CARACTER;
-}
-'%x[0-9a-fA-F]?[0-9a-fA-F]' {
-    printf("linea %d, constante de caracter: %s\n", yylineno, yytext);
-    return CTC_CARACTER;
-}
 
 
 [{}();:.,|]|(::)|=> { 
