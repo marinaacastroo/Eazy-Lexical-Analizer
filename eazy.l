@@ -43,7 +43,6 @@ CADENA  \"([^\n"]|ESCAPADO|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
 DELIMITADOR [():;.\:\:]
 
-
 %%
 
 [ \t\r\n]+       ;
@@ -105,6 +104,22 @@ DELIMITADOR [():;.\:\:]
 
 {IDENTIFICADOR} {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 
+{DELIMITADOR}       {printf("linea %d, delimitador: %s\n" , yylineno, yytext); return DELIMITADOR;}
+{CONST_DECIMAL}    {printf("linea %d, constante decimal: %s\n" , yylineno, yytext); return CONST_DECIMAL;}
+{CONST_OCTAL}      {printf("linea %d, constante octal: %s\n" , yylineno, yytext); return CONST_OCTAL;}
+{CONST_HEXADECIMAL} {printf("linea %d, constante hexadecimal: %s\n" , yylineno, yytext); return CONST_HEXADECIMAL;}
+{REAL_DECIMAL}     {printf("linea %d, constante real decimal: %s\n" , yylineno, yytext); return REAL_DECIMAL;}
+{REAL_OCTAL}       {printf("linea %d, constante real octal: %s\n" , yylineno, yytext); return REAL_OCTAL;}
+{REAL_HEXADECIMAL} {printf("linea %d, constante real hexadecimal: %s\n" , yylineno, yytext); return REAL_HEXADECIMAL;}
+{REAL_DEC_EXP}     {printf("linea %d, constante real decimal con exponente: %s\n" , yylineno, yytext); return REAL_DEC_EXP;}
+{REAL_OCT_EXP}     {printf("linea %d, constante real octal con exponente: %s\n" , yylineno, yytext); return REAL_OCT_EXP;}
+{REAL_HEX_EXP}     {printf("linea %d, constante real hexadecimal con exponente: %s\n" , yylineno, yytext); return REAL_HEX_EXP;}
+{CARACTER_VISIBLE} {printf("linea %d, caracter visible: %s\n" , yylineno, yytext); return CARACTER_VISIBLE;}
+{ESCAPADO}         {printf("linea %d, caracter escapado: %s\n" , yylineno, yytext); return ESCAPADO;}
+{CARACTER_OCTAL}   {printf("linea %d, caracter octal: %s\n" , yylineno, yytext); return CARACTER_OCTAL;}
+{CARACTER_HEXA}    {printf("linea %d, caracter hexadecimal: %s\n" , yylineno, yytext); return CARACTER_HEXA;}
+{CADENA}           {printf("linea %d, cadena: %s\n" , yylineno, yytext); return CADENA;}
+
 
 
 "+"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
@@ -159,30 +174,21 @@ DELIMITADOR [():;.\:\:]
 
 
 
-/* TODO: Arreglar comentarios */
+%s COMENTARIO
 
-"#{"
-    BEGIN COMENTARIO;
-<COMENTARIO>.|\n               ;
-<COMENTARIO>"#}"              BEGIN 0;
-
-"##".*                       ;
+%%[^\n]*      ;   /* Comentario de una línea */
+"%/"          BEGIN(COMENTARIO);
+<COMENTARIO>.|\n ;
+<COMENTARIO>"/%" BEGIN(0);
 
 
-
-[{}();:.,|]|(::)|=> { 
-    printf("linea %d, delimitador: %s\n", yylineno, yytext); 
-    return yytext[0]; 
-}
-
-#\{([^#\{#\}]|\n)*#\} ;
-##.* ;
-
-. {
-    printf("linea %d, ERROR: %s\n", yylineno, yytext);
-}
+/* Manejo de errores */
+[ \t\n]                  ;  /* Ignorar espacios, tabuladores y saltos de línea */
+.                        { fprintf(yyout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 
 %%
+
+
 
 int yywrap() {
     return 1;
