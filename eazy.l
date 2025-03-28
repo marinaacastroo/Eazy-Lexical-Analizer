@@ -5,6 +5,7 @@
 #include "eazy.h"
 %}
 
+%s COMENTARIO
 
 IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
 
@@ -98,92 +99,90 @@ DELIMITADOR [():;.]
 
 {IDENTIFICADOR} {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 
-{DELIMITADOR}       {printf("linea %d, delimitador: %s\n" , yylineno, yytext); return DELIMITADOR;}
-{CONST_DECIMAL}    {printf("linea %d, constante decimal: %s\n" , yylineno, yytext); return CONST_DECIMAL;}
-{CONST_OCTAL}      {printf("linea %d, constante octal: %s\n" , yylineno, yytext); return CONST_OCTAL;}
-{CONST_HEXADECIMAL} {printf("linea %d, constante hexadecimal: %s\n" , yylineno, yytext); return CONST_HEXADECIMAL;}
-{REAL_DECIMAL}     {printf("linea %d, constante real decimal: %s\n" , yylineno, yytext); return REAL_DECIMAL;}
-{REAL_OCTAL}       {printf("linea %d, constante real octal: %s\n" , yylineno, yytext); return REAL_OCTAL;}
-{REAL_HEXADECIMAL} {printf("linea %d, constante real hexadecimal: %s\n" , yylineno, yytext); return REAL_HEXADECIMAL;}
-{REAL_DEC_EXP}     {printf("linea %d, constante real decimal con exponente: %s\n" , yylineno, yytext); return REAL_DEC_EXP;}
-{REAL_OCT_EXP}     {printf("linea %d, constante real octal con exponente: %s\n" , yylineno, yytext); return REAL_OCT_EXP;}
-{REAL_HEX_EXP}     {printf("linea %d, constante real hexadecimal con exponente: %s\n" , yylineno, yytext); return REAL_HEX_EXP;}
-{CARACTER_VISIBLE} {printf("linea %d, caracter visible: %s\n" , yylineno, yytext); return CARACTER_VISIBLE;}
-{ESCAPADO}         {printf("linea %d, caracter escapado: %s\n" , yylineno, yytext); return ESCAPADO;}
-{CARACTER_OCTAL}   {printf("linea %d, caracter octal: %s\n" , yylineno, yytext); return CARACTER_OCTAL;}
-{CARACTER_HEXA}    {printf("linea %d, caracter hexadecimal: %s\n" , yylineno, yytext); return CARACTER_HEXA;}
+{CONST_DECIMAL}    {printf("linea %d, constante entera: %s\n" , yylineno, yytext); return CTC_ENTERA;}
+{CONST_OCTAL}      {printf("linea %d, constante entera: %s\n" , yylineno, yytext); return CTC_ENTERA;}
+{CONST_HEXADECIMAL} {printf("linea %d, constante entera: %s\n" , yylineno, yytext); return CTC_ENTERA;}
+{REAL_DECIMAL}     {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
+{REAL_OCTAL}       {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
+{REAL_HEXADECIMAL} {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
+{REAL_DEC_EXP}     {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
+{REAL_OCT_EXP}     {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
+{REAL_HEX_EXP}     {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
+{CARACTER_VISIBLE} {printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
+{ESCAPADO}         {printf("linea %d, caracter escapado: %s\n" , yylineno, yytext); return CARACTER;}
+{CARACTER_OCTAL}   {printf("linea %d, caracter octal: %s\n" , yylineno, yytext); return CARACTER;}
+{CARACTER_HEXA}    {printf("linea %d, caracter hexadecimal: %s\n" , yylineno, yytext); return CARACTER;}
 {CADENA}           {printf("linea %d, cadena: %s\n" , yylineno, yytext); return CADENA;}
+{DELIMITADOR}      {printf("linea %d, delimitador: %s\n" , yylineno, yytext); return (int)yytext[0];}
 
 
 
-"+"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
-"-"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
-"*"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
-"/"             {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return (int)yytext[0];}
-"mod"          {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return MOD;}
-"**"           {nl(); fprintf(yyout, "operador aritmetico: %s \n", yytext); return POTENCIA;}
+"+"             {printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return (int)yytext[0];}
+"-"             {printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return (int)yytext[0];}
+"*"             {printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return (int)yytext[0];}
+"/"             {printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return (int)yytext[0];}
+"mod"           {printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return MOD;}
+"**"            {printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return POTENCIA;}
 
-"<-"            {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return FLECHA_IZDA;}
-"->"            {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return FLECHA_DCHA;}
-"&"             {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return (int)yytext[0];}
-"|"             {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return (int)yytext[0];}
-"@"             {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return (int)yytext[0];}
-"~"             {nl(); fprintf(yyout, "operador de bits: %s \n", yytext); return (int)yytext[0];}
+"<-"            {printf("linea %d, operador de bits: %s \n", yylineno, yytext); return FLECHA_IZDA;}
+"->"            {printf("linea %d, operador de bits: %s \n", yylineno, yytext); return FLECHA_DCHA;}
+"&"             {printf("linea %d, operador de bits: %s \n", yylineno, yytext); return (int)yytext[0];}
+"|"             {printf("linea %d, operador de bits: %s \n", yylineno, yytext); return (int)yytext[0];}
+"@"             {printf("linea %d, operador de bits: %s \n", yylineno, yytext); return (int)yytext[0];}
+"~"             {printf("linea %d, operador de bits: %s \n", yylineno, yytext); return (int)yytext[0];}
 
-"<"             {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return (int)yytext[0];}
-">"             {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return (int)yytext[0];}
-"<="           {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return LE;}
-">="           {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return GE;}
-"=="           {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return EQ;}
-"!="           {nl(); fprintf(yyout, "operador relacional: %s \n", yytext); return NEQ;}
+"<"             {printf("linea %d, operador relacional: %s \n", yylineno, yytext); return (int)yytext[0];}
+">"             {printf("linea %d, operador relacional: %s \n", yylineno, yytext); return (int)yytext[0];}
+"<="            {printf("linea %d, operador relacional: %s \n", yylineno, yytext); return LE;}
+">="            {printf("linea %d, operador relacional: %s \n", yylineno, yytext); return GE;}
+"=="            {printf("linea %d, operador relacional: %s \n", yylineno, yytext); return EQ;}
+"!="            {printf("linea %d, operador relacional: %s \n", yylineno, yytext); return NEQ;}
 
-"!"             {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return (int)yytext[0];}
-"&&"           {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return AND;}
-"||"           {nl(); fprintf(yyout, "operador logico: %s \n", yytext); return OR;}
+"!"             {printf("linea %d, operador logico: %s \n", yylineno, yytext); return (int)yytext[0];}
+"&&"            {printf("linea %d, operador logico: %s \n", yylineno, yytext); return AND;}
+"||"            {printf("linea %d, operador logico: %s \n", yylineno, yytext); return OR;}
 
-":="           {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return ASIG;}
-"+="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return SUMA_ASIG;}
-"-="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return RESTA_ASIG;}
-"*="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return MULT_ASIG;}
-"/="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return DIV_ASIG;}
-"mod="        {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return MOD_ASIG;}
-"**="         {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return POT_ASIG;}
-"<-="         {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return FI_ASIG;}
-"->="         {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return FD_ASIG;}
-"&="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return AND_ASIG;}
-"@="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return XOR_ASIG;}
-"|="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return OR_ASIG;}
+":="            {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return ASIG;}
+"+="            {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return SUMA_ASIG;}
+"-="            {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return RESTA_ASIG;}
+"*="            {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return MULT_ASIG;}
+"/="            {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return DIV_ASIG;}
+"mod="          {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return MOD_ASIG;}
+"**="           {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return POT_ASIG;}
+"<-="           {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return FI_ASIG;}
+"->="           {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return FD_ASIG;}
+"&="            {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return AND_ASIG;}
+"@="            {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return XOR_ASIG;}
+"|="            {printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return OR_ASIG;}
 
-"tamano"       {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return TAMANO;}
-(?i:"tamano")  {printf("linea %d, Identificador: TAMANO\n" , yylineno); return TAMANO;}
-"?"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
-"^"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
-"^?"           {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return INDIRECCION;}
-"["         {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
-"]"         {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
-"{"         {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
-"}"         {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
+"tamano"        {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return TAMANO;}
+(?i:"tamano")   {printf("linea %d, Identificador: TAMANO\n" , yylineno); return TAMANO;}
+"?"             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
+"^"             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
+"^?"            {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return INDIRECCION;}
+"["             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
+"]"             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
+"{"             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
+"}"             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
 
-"::"           {nl(); fprintf(yyout, "operador: %s \n", yytext); return PTOS;}
+"::"            {printf("linea %d, operador: %s \n", yylineno, yytext); return PTOS;}
 
 
 
-%s COMENTARIO
-
-%%[^\n]*      ;   
 "%/"          BEGIN(COMENTARIO);
-<COMENTARIO>.|\n ;
+<COMENTARIO>.|\n ;  
 <COMENTARIO>"/%" BEGIN(0);
 
+"%%".*        ;  
 
-[ \t\n]                  ;  
-.                        { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
+
+[ \t\n]+      ;
+
+.             { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 
 %%
 
-void nl() {
-    // Implementación vacía o personalizada
-}
+
 
 int yywrap() {
     return 1;
