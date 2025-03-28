@@ -155,7 +155,7 @@ DELIMITADOR [():;.]
 "|="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return OR_ASIG;}
 
 "tamano"       {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return TAMANO;}
-(?i:"tamano")          {printf("linea %d, Identificador: TAMANO\n" , yylineno); return TAMANO;}
+(?i:"tamano")  {printf("linea %d, Identificador: TAMANO\n" , yylineno); return TAMANO;}
 "?"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
 "^"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
 "^?"           {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return INDIRECCION;}
@@ -177,11 +177,13 @@ DELIMITADOR [():;.]
 
 
 [ \t\n]                  ;  
-.                        { fprintf(yyout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
+.                        { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 
 %%
 
-
+void nl() {
+    // Implementación vacía o personalizada
+}
 
 int yywrap() {
     return 1;
