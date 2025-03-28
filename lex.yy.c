@@ -382,57 +382,57 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[517] =
     {   0,
-        0,    0,    0,    0,  125,  117,    1,    1,    1,   92,
-      123,  123,   82,   68,   69,   76,   74,  117,   75,   72,
-       77,   55,   70,   71,   86,  117,   87,  109,   84,  116,
-      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
-      116,  116,  116,  116,  116,  116,  116,  116,  112,  113,
-      110,  116,  116,  114,   83,  115,   85,  117,    1,    1,
-        1,   92,  119,  119,   82,   68,   69,   76,   74,  117,
-       75,   72,   77,   55,   70,   71,   86,  117,   87,  109,
-       84,  116,  116,  116,  116,  116,  116,  116,  116,  116,
-      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
+        0,    0,    0,    0,  125,  118,    1,    1,    1,   93,
+      123,  123,   83,   69,   70,   77,   75,  118,   76,   73,
+       78,   55,   71,   72,   87,  118,   88,  110,   85,  117,
+      117,  117,  117,  117,  117,  117,  117,  117,  117,  117,
+      117,  117,  117,  117,  117,  117,  117,  117,  113,  114,
+      111,  117,  117,  115,   84,  116,   86,  118,    1,    1,
+        1,   93,  120,  120,   83,   69,   70,   77,   75,  118,
+       76,   73,   78,   55,   71,   72,   87,  118,   88,  110,
+       85,  117,  117,  117,  117,  117,  117,  117,  117,  117,
+      117,  117,  117,  117,  117,  117,  117,  117,  117,  117,
 
-      112,  113,  110,  116,  116,  114,   83,  115,   85,    1,
-        1,   91,    0,   67,    0,    0,   64,   64,    0,    0,
-      118,   56,    0,   93,  104,   79,   98,   96,   58,   97,
-       81,   99,    0,   55,    0,   73,   95,   80,   88,   90,
-       89,  105,  116,  116,  116,  116,  116,   11,  116,   19,
-       20,  116,  116,  116,  116,  116,  116,  116,  116,  116,
-      116,   37,  116,  116,  116,  116,  116,  116,   48,  116,
-      116,  116,  116,  116,  111,  116,  116,  106,   94,  120,
-       67,    0,    0,    0,  121,    0,   59,    0,  101,  103,
-        0,  102,  116,  116,  116,  116,  116,  116,  116,  116,
+      113,  114,  111,  117,  117,  115,   84,  116,   86,    1,
+        1,   92,    0,   67,    0,    0,   64,   64,    0,    0,
+      119,   56,    0,   94,  105,   80,   99,   97,   58,   98,
+       82,  100,    0,   55,    0,   74,   96,   81,   89,   91,
+       90,  106,  117,  117,  117,  117,  117,   11,  117,   19,
+       20,  117,  117,  117,  117,  117,  117,  117,  117,  117,
+      117,   37,  117,  117,  117,  117,  117,  117,   48,  117,
+      117,  117,  117,  117,  112,  117,  117,  107,   95,  121,
+       67,    0,    0,    0,  122,    0,   59,    0,  102,  104,
+        0,  103,  117,  117,  117,  117,  117,  117,  117,  117,
 
-      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
-      116,   27,  116,  116,  116,  116,  116,  116,  116,  116,
-      116,  116,  116,  116,  116,  116,   46,  116,  116,  116,
-      116,  116,  116,  116,  116,   78,  116,    0,    0,    0,
-        0,    0,  116,    3,  116,  116,  116,    7,  116,  116,
-      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
-      116,  116,  116,  116,  116,  116,  116,   31,  116,  116,
-      116,   36,   38,   39,  116,  116,  116,  116,  116,   45,
-      116,   49,  116,  116,  116,  116,  116,  116,  100,  116,
-        0,    0,    0,    0,    0,    0,   61,  116,  116,  116,
+      117,  117,  117,  117,  117,  117,  117,  117,  117,  117,
+      117,   27,  117,  117,  117,  117,  117,  117,  117,  117,
+      117,  117,  117,  117,  117,  117,   46,  117,  117,  117,
+      117,  117,  117,  117,  117,   79,  117,    0,    0,    0,
+        0,    0,  117,    3,  117,  117,  117,    7,  117,  117,
+      117,  117,  117,  117,  117,  117,  117,  117,  117,  117,
+      117,  117,  117,  117,  117,  117,  117,   31,  117,  117,
+      117,   36,   38,   39,  117,  117,  117,  117,  117,   45,
+      117,   49,  117,  117,  117,  117,  117,  117,  101,  117,
+        0,    0,    0,    0,    0,    0,   61,  117,  117,  117,
 
-        6,  116,  116,  116,  116,  116,  116,  116,  116,  116,
-      116,  116,  116,  116,  116,  116,   28,  116,  116,   32,
-      116,   34,  116,  116,  116,  116,  116,  116,  116,   50,
-      116,   51,  116,   53,  116,  116,    0,    0,    0,    0,
-        0,   57,   61,    0,  116,    4,  116,  116,  116,  116,
-      116,  116,  116,  116,  116,   17,  116,   21,  116,  116,
-      116,  116,  116,  116,  116,  116,  116,  116,  116,  116,
-      116,  116,   47,  108,   52,  116,  107,    0,    0,    0,
-        0,   62,    0,   60,    0,  116,  116,  116,  116,  116,
-       12,  116,  116,   15,  116,  116,  116,  116,  116,  116,
+        6,  117,  117,  117,  117,  117,  117,  117,  117,  117,
+      117,  117,  117,  117,  117,  117,   28,  117,  117,   32,
+      117,   34,  117,  117,  117,  117,  117,  117,  117,   50,
+      117,   51,  117,   53,  117,  117,    0,    0,    0,    0,
+        0,   57,   61,    0,  117,    4,  117,  117,  117,  117,
+      117,  117,  117,  117,  117,   17,  117,   21,  117,  117,
+      117,  117,  117,  117,  117,  117,  117,  117,  117,  117,
+      117,  117,   47,  109,   52,  117,  108,    0,    0,    0,
+        0,   62,    0,   60,    0,  117,  117,  117,  117,  117,
+       12,  117,  117,   15,  117,  117,  117,  117,  117,  117,
 
-       26,   29,  116,  116,  116,  116,   41,  116,  116,   44,
-      116,    0,    0,   62,    0,    0,   60,    0,  116,    5,
-      116,  116,  116,  116,   14,   16,  116,  116,  116,   24,
-      116,   30,   33,   35,  116,   42,  116,  116,    0,    0,
-        0,    0,    0,    0,    2,  116,  116,   10,  116,  116,
-      116,  116,   25,   40,   43,   54,    0,    0,    0,    0,
-        0,   61,    8,  116,   13,  116,   22,   23,    0,    0,
+       26,   29,  117,  117,  117,  117,   41,  117,  117,   44,
+      117,    0,    0,   62,    0,    0,   60,    0,  117,    5,
+      117,  117,  117,  117,   14,   16,  117,  117,  117,   24,
+      117,   30,   33,   35,  117,   42,  117,  117,    0,    0,
+        0,    0,    0,    0,    2,  117,  117,   10,  117,  117,
+      117,  117,   25,   40,   43,   54,    0,    0,    0,    0,
+        0,   61,    8,  117,   13,  117,   22,   23,    0,    0,
         0,    0,    0,    0,    0,   63,    9,   18,    0,    0,
         0,   62,    0,   63,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,   63,
@@ -916,10 +916,10 @@ static const flex_int32_t yy_rule_can_match_eol[125] =
 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-    0, 0, 1, 0, 0,     };
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    1, 0, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -1567,9 +1567,10 @@ YY_RULE_SETUP
 {printf("linea %d, cadena: %s\n" , yylineno, yytext); return CADENA;}
 	YY_BREAK
 case 68:
+/* rule 68 can match eol */
 YY_RULE_SETUP
-#line 115 "eazy.l"
-{printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
+#line 114 "eazy.l"
+;
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
@@ -1594,12 +1595,12 @@ YY_RULE_SETUP
 case 73:
 YY_RULE_SETUP
 #line 120 "eazy.l"
-{printf("linea %d, delimitador: %s \n", yylineno, yytext); return PTOS;}
+{printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 123 "eazy.l"
-{printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return (int)yytext[0];}
+#line 121 "eazy.l"
+{printf("linea %d, delimitador: %s \n", yylineno, yytext); return PTOS;}
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
@@ -1619,27 +1620,27 @@ YY_RULE_SETUP
 case 78:
 YY_RULE_SETUP
 #line 127 "eazy.l"
-{printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return MOD;}
+{printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return (int)yytext[0];}
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
 #line 128 "eazy.l"
-{printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return POTENCIA;}
+{printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return MOD;}
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 130 "eazy.l"
-{printf("linea %d, operador de bits: %s \n", yylineno, yytext); return FLECHA_IZDA;}
+#line 129 "eazy.l"
+{printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return POTENCIA;}
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
 #line 131 "eazy.l"
-{printf("linea %d, operador de bits: %s \n", yylineno, yytext); return FLECHA_DCHA;}
+{printf("linea %d, operador de bits: %s \n", yylineno, yytext); return FLECHA_IZDA;}
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
 #line 132 "eazy.l"
-{printf("linea %d, operador de bits: %s \n", yylineno, yytext); return (int)yytext[0];}
+{printf("linea %d, operador de bits: %s \n", yylineno, yytext); return FLECHA_DCHA;}
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
@@ -1658,8 +1659,8 @@ YY_RULE_SETUP
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 137 "eazy.l"
-{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return (int)yytext[0];}
+#line 136 "eazy.l"
+{printf("linea %d, operador de bits: %s \n", yylineno, yytext); return (int)yytext[0];}
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
@@ -1669,112 +1670,112 @@ YY_RULE_SETUP
 case 88:
 YY_RULE_SETUP
 #line 139 "eazy.l"
-{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return LE;}
+{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return (int)yytext[0];}
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
 #line 140 "eazy.l"
-{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return GE;}
+{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return LE;}
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
 #line 141 "eazy.l"
-{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return EQ;}
+{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return GE;}
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
 #line 142 "eazy.l"
-{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return NEQ;}
+{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return EQ;}
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 144 "eazy.l"
-{printf("linea %d, operador logico: %s \n", yylineno, yytext); return (int)yytext[0];}
+#line 143 "eazy.l"
+{printf("linea %d, operador relacional: %s \n", yylineno, yytext); return NEQ;}
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
 #line 145 "eazy.l"
-{printf("linea %d, operador logico: %s \n", yylineno, yytext); return AND;}
+{printf("linea %d, operador logico: %s \n", yylineno, yytext); return (int)yytext[0];}
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
 #line 146 "eazy.l"
-{printf("linea %d, operador logico: %s \n", yylineno, yytext); return OR;}
+{printf("linea %d, operador logico: %s \n", yylineno, yytext); return AND;}
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 148 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return ASIG;}
+#line 147 "eazy.l"
+{printf("linea %d, operador logico: %s \n", yylineno, yytext); return OR;}
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
 #line 149 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return SUMA_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return ASIG;}
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
 #line 150 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return RESTA_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return SUMA_ASIG;}
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
 #line 151 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return MULT_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return RESTA_ASIG;}
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
 #line 152 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return DIV_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return MULT_ASIG;}
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
 #line 153 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return MOD_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return DIV_ASIG;}
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
 #line 154 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return POT_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return MOD_ASIG;}
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
 #line 155 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return FI_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return POT_ASIG;}
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
 #line 156 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return FD_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return FI_ASIG;}
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
 #line 157 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return AND_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return FD_ASIG;}
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
 #line 158 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return XOR_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return AND_ASIG;}
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
 #line 159 "eazy.l"
-{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return OR_ASIG;}
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return XOR_ASIG;}
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 161 "eazy.l"
-{printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return TAMANO;}
+#line 160 "eazy.l"
+{printf("linea %d, operador de asignacion: %s \n", yylineno, yytext); return OR_ASIG;}
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
 #line 162 "eazy.l"
-{printf("linea %d, Identificador: TAMANO\n" , yylineno); return TAMANO;}
+{printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return TAMANO;}
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
 #line 163 "eazy.l"
-{printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
+{printf("linea %d, Identificador: TAMANO\n" , yylineno); return TAMANO;}
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
@@ -1784,12 +1785,12 @@ YY_RULE_SETUP
 case 111:
 YY_RULE_SETUP
 #line 165 "eazy.l"
-{printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return INDIRECCION;}
+{printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
 #line 166 "eazy.l"
-{printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
+{printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return INDIRECCION;}
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
@@ -1808,44 +1809,43 @@ YY_RULE_SETUP
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 172 "eazy.l"
-{printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
+#line 170 "eazy.l"
+{printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
 #line 173 "eazy.l"
-{printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
+{printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 175 "eazy.l"
-BEGIN(COMENTARIO);
+#line 174 "eazy.l"
+{printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
 	YY_BREAK
 case 119:
-/* rule 119 can match eol */
 YY_RULE_SETUP
 #line 176 "eazy.l"
-;  
+BEGIN(COMENTARIO);
 	YY_BREAK
 case 120:
+/* rule 120 can match eol */
 YY_RULE_SETUP
 #line 177 "eazy.l"
-BEGIN(0);
+;  
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 179 "eazy.l"
-;  
+#line 178 "eazy.l"
+BEGIN(0);
 	YY_BREAK
 case 122:
-/* rule 122 can match eol */
 YY_RULE_SETUP
-#line 182 "eazy.l"
-;
+#line 180 "eazy.l"
+;  
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 184 "eazy.l"
+#line 185 "eazy.l"
 { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 	YY_BREAK
 case 124:
