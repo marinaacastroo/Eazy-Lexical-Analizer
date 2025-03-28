@@ -8,26 +8,21 @@
 
 IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
 
-//Definición de tipos de constantes
 NUM_DECIMAL     [0-9]+
 NUM_OCTAL       [0-7]+
 NUM_HEXADECIMAL [0-9a-fA-F]+
 
-//Definicion de constantes enteras
 CONST_DECIMAL     {NUM_DECIMAL}
 CONST_OCTAL       "%"{NUM_OCTAL}
 CONST_HEXADECIMAL "%[hH]"{NUM_HEXADECIMAL}
 
 
-//Definicion de constantes reales
 REAL_DECIMAL ({NUM_DECIMAL}?","){NUM_DECIMAL}+
 REAL_OCTAL         "%"{NUM_OCTAL}?","{NUM_OCTAL}
 REAL_HEXADECIMAL   "%[hH]"{NUM_HEXADECIMAL}?","{NUM_HEXADECIMAL}
 
-// Exponente
 EXPONENTE          "exp"[-+]?({NUM_DECIMAL}|"%"{NUM_OCTAL}|"%[hH]"{NUM_HEXADECIMAL})
 
-// Constantes reales con exponente
 REAL_DEC_EXP      ({NUM_DECIMAL} | {REAL_DECIMAL}){EXPONENTE}
 REAL_OCT_EXP      ("%"{NUM_OCTAL} | {REAL_OCTAL}){EXPONENTE}
 REAL_HEX_EXP      ("%[hH]"{NUM_HEXADECIMAL} | {REAL_HEXADECIMAL}){EXPONENTE}
@@ -35,7 +30,6 @@ REAL_HEX_EXP      ("%[hH]"{NUM_HEXADECIMAL} | {REAL_HEXADECIMAL}){EXPONENTE}
 CARACTER_VISIBLE    [^"\n%]   // Cualquier carácter excepto " (comillas dobles), salto de línea y '%'
 ESCAPADO            "%%" | "%\"" | "%f" | "%n" | "%r" | "%t"
 
-// Definición de constantes de caracteres
 CARACTER_OCTAL "%([0-7]{1,2}|1[0-7]{2})"   // Rango de números octales válidos hasta %177
 CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"   // Asegura que el valor esté en el rango 00-7F
 
