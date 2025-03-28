@@ -17,25 +17,25 @@ CONST_OCTAL       "%"{NUM_OCTAL}
 CONST_HEXADECIMAL "%[hH]"{NUM_HEXADECIMAL}
 
 
-REAL_DECIMAL ({NUM_DECIMAL}?","){NUM_DECIMAL}+
-REAL_OCTAL         "%"{NUM_OCTAL}?","{NUM_OCTAL}
-REAL_HEXADECIMAL   "%[hH]"{NUM_HEXADECIMAL}?","{NUM_HEXADECIMAL}
+REAL_DECIMAL    ({NUM_DECIMAL}?","){NUM_DECIMAL}+
+REAL_OCTAL      "%"{NUM_OCTAL}?","{NUM_OCTAL}
+REAL_HEXADECIMAL "%[hH]"{NUM_HEXADECIMAL}?","{NUM_HEXADECIMAL}
 
-EXPONENTE          "exp"[-+]?({NUM_DECIMAL}|"%"{NUM_OCTAL}|"%[hH]"{NUM_HEXADECIMAL})
+EXPONENTE       "exp"[-+]?({NUM_DECIMAL}|"%"{NUM_OCTAL}|"%[hH]"{NUM_HEXADECIMAL})
 
-REAL_DEC_EXP      ({NUM_DECIMAL}|{REAL_DECIMAL}){EXPONENTE}
-REAL_OCT_EXP      "%"{NUM_OCTAL}|{REAL_OCTAL}{EXPONENTE}
-REAL_HEX_EXP      "%[hH]"{NUM_HEXADECIMAL}|{REAL_HEXADECIMAL}{EXPONENTE}
+REAL_DEC_EXP    ({NUM_DECIMAL}|{REAL_DECIMAL}){EXPONENTE}
+REAL_OCT_EXP    "%"{NUM_OCTAL}|{REAL_OCTAL}{EXPONENTE}
+REAL_HEX_EXP    "%[hH]"{NUM_HEXADECIMAL}|{REAL_HEXADECIMAL}{EXPONENTE}
 
 CARACTER_VISIBLE    [^"\n%]  
-ESCAPADO            "%%" | "%\"" | "%f" | "%n" | "%r" | "%t"
+ESCAPADO            ("%%" | "%\"" | "%f" | "%n" | "%r" | "%t")
 
 CARACTER_OCTAL "%([0-7]{1,2}|1[0-7]{2})"
 CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"   
 
-CADENA  \"([^\n"]|ESCAPADO|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
+CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
-DELIMITADOR [():;.\:\:]
+DELIMITADOR [():;.]
 
 %%
 
@@ -155,6 +155,7 @@ DELIMITADOR [():;.\:\:]
 "|="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return OR_ASIG;}
 
 "tamano"       {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return TAMANO;}
+(?i:"tamano")          {printf("linea %d, Identificador: TAMANO\n" , yylineno); return TAMANO;}
 "?"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
 "^"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
 "^?"           {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return INDIRECCION;}
