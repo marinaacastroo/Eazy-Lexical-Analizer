@@ -37,7 +37,6 @@ CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"
 
 CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
-DELIMITADOR [():;.]
 
 %%
 
@@ -108,13 +107,17 @@ DELIMITADOR [():;.]
 {REAL_DEC_EXP}     {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
 {REAL_OCT_EXP}     {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
 {REAL_HEX_EXP}     {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
-{CARACTER_VISIBLE} {printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
 {ESCAPADO}         {printf("linea %d, caracter escapado: %s\n" , yylineno, yytext); return CARACTER;}
 {CARACTER_OCTAL}   {printf("linea %d, caracter octal: %s\n" , yylineno, yytext); return CARACTER;}
 {CARACTER_HEXA}    {printf("linea %d, caracter hexadecimal: %s\n" , yylineno, yytext); return CARACTER;}
 {CADENA}           {printf("linea %d, cadena: %s\n" , yylineno, yytext); return CADENA;}
-{DELIMITADOR}      {printf("linea %d, delimitador: %s\n" , yylineno, yytext); return (int)yytext[0];}
 
+"("             {printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
+")"             {printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
+":"             {printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
+";"             {printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
+"."             {printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
+"::"            {printf("linea %d, delimitador: %s \n", yylineno, yytext); return PTOS;}
 
 
 "+"             {printf("linea %d, operador aritmetico: %s \n", yylineno, yytext); return (int)yytext[0];}
@@ -165,9 +168,9 @@ DELIMITADOR [():;.]
 "{"             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
 "}"             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
 
-"::"            {printf("linea %d, operador: %s \n", yylineno, yytext); return PTOS;}
 
 
+{CARACTER_VISIBLE} {printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
 
 "%/"          BEGIN(COMENTARIO);
 <COMENTARIO>.|\n ;  
