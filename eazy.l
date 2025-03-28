@@ -23,15 +23,15 @@ REAL_HEXADECIMAL   "%[hH]"{NUM_HEXADECIMAL}?","{NUM_HEXADECIMAL}
 
 EXPONENTE          "exp"[-+]?({NUM_DECIMAL}|"%"{NUM_OCTAL}|"%[hH]"{NUM_HEXADECIMAL})
 
-REAL_DEC_EXP      ({NUM_DECIMAL} | {REAL_DECIMAL}){EXPONENTE}
-REAL_OCT_EXP      ("%"{NUM_OCTAL} | {REAL_OCTAL}){EXPONENTE}
-REAL_HEX_EXP      ("%[hH]"{NUM_HEXADECIMAL} | {REAL_HEXADECIMAL}){EXPONENTE}
+REAL_DEC_EXP      ({NUM_DECIMAL}|{REAL_DECIMAL}){EXPONENTE}
+REAL_OCT_EXP      "%"{NUM_OCTAL}|{REAL_OCTAL}{EXPONENTE}
+REAL_HEX_EXP      "%[hH]"{NUM_HEXADECIMAL}|{REAL_HEXADECIMAL}{EXPONENTE}
 
-CARACTER_VISIBLE    [^"\n%]   // Cualquier carácter excepto " (comillas dobles), salto de línea y '%'
+CARACTER_VISIBLE    [^"\n%]  
 ESCAPADO            "%%" | "%\"" | "%f" | "%n" | "%r" | "%t"
 
-CARACTER_OCTAL "%([0-7]{1,2}|1[0-7]{2})"   // Rango de números octales válidos hasta %177
-CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"   // Asegura que el valor esté en el rango 00-7F
+CARACTER_OCTAL "%([0-7]{1,2}|1[0-7]{2})"
+CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"   
 
 CADENA  \"([^\n"]|ESCAPADO|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
@@ -155,7 +155,6 @@ DELIMITADOR [():;.\:\:]
 "|="          {nl(); fprintf(yyout, "operador de asignacion: %s \n", yytext); return OR_ASIG;}
 
 "tamano"       {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return TAMANO;}
-/* TODO: definir tamano si es en mayusculas entonces es identificador */
 "?"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
 "^"            {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return (int)yytext[0];}
 "^?"           {nl(); fprintf(yyout, "operador de acceso a memoria: %s \n", yytext); return INDIRECCION;}
@@ -170,14 +169,13 @@ DELIMITADOR [():;.\:\:]
 
 %s COMENTARIO
 
-%%[^\n]*      ;   /* Comentario de una línea */
+%%[^\n]*      ;   
 "%/"          BEGIN(COMENTARIO);
 <COMENTARIO>.|\n ;
 <COMENTARIO>"/%" BEGIN(0);
 
 
-/* Manejo de errores */
-[ \t\n]                  ;  /* Ignorar espacios, tabuladores y saltos de línea */
+[ \t\n]                  ;  
 .                        { fprintf(yyout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 
 %%
