@@ -96,7 +96,6 @@ CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 (?i:"union")         {printf("linea %d, palabra reservada: UNION\n" , yylineno); return UNION;}
 (?i:"variables")     {printf("linea %d, palabra reservada: VARIABLES\n" , yylineno); return VARIABLES;}
 
-{IDENTIFICADOR} {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 
 {CONST_DECIMAL}    {printf("linea %d, constante entera: %s\n" , yylineno, yytext); return CTC_ENTERA;}
 {CONST_OCTAL}      {printf("linea %d, constante entera: %s\n" , yylineno, yytext); return CTC_ENTERA;}
@@ -111,6 +110,7 @@ CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 {CARACTER_OCTAL}   {printf("linea %d, caracter octal: %s\n" , yylineno, yytext); return CARACTER;}
 {CARACTER_HEXA}    {printf("linea %d, caracter hexadecimal: %s\n" , yylineno, yytext); return CARACTER;}
 {CADENA}           {printf("linea %d, cadena: %s\n" , yylineno, yytext); return CADENA;}
+
 
 "("             {printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
 ")"             {printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
@@ -169,7 +169,7 @@ CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 "}"             {printf("linea %d, operador de acceso a memoria: %s \n", yylineno, yytext); return (int)yytext[0];}
 
 
-
+{IDENTIFICADOR} {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 {CARACTER_VISIBLE} {printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
 
 "%/"          BEGIN(COMENTARIO);
