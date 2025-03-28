@@ -28,7 +28,8 @@ REAL_OCT_EXP    "%"{NUM_OCTAL}|{REAL_OCTAL}{EXPONENTE}
 REAL_HEX_EXP    "%[hH]"{NUM_HEXADECIMAL}|{REAL_HEXADECIMAL}{EXPONENTE}
 
 CARACTER_VISIBLE    [^"\n%]  
-ESCAPADO            ("%%" | "%\"" | "%f" | "%n" | "%r" | "%t")
+ESCAPADO  %(\'|\"|%|n|r|t)
+
 
 CARACTER_OCTAL "%([0-7]{1,2}|1[0-7]{2})"
 CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"   
@@ -89,7 +90,6 @@ DELIMITADOR [():;.]
 (?i:"saltar")        {printf("linea %d, palabra reservada: SALTAR\n" , yylineno); return SALTAR;}
 (?i:"si")            {printf("linea %d, palabra reservada: SI\n" , yylineno); return SI;}
 (?i:"sino")          {printf("linea %d, palabra reservada: SINO\n" , yylineno); return SINO;}
-(?i:"tamano")        {printf("linea %d, palabra reservada: TAMANO\n" , yylineno); return TAMANO;}
 (?i:"tabla")         {printf("linea %d, palabra reservada: TABLA\n" , yylineno); return TABLA;}
 (?i:"tipos")         {printf("linea %d, palabra reservada: TIPOS\n" , yylineno); return TIPOS;}
 (?i:"ultima")        {printf("linea %d, palabra reservada: ULTIMA\n" , yylineno); return ULTIMA;}
