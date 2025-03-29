@@ -27,7 +27,7 @@ REAL_DEC_EXP    ({NUM_DECIMAL}|{REAL_DECIMAL}){EXPONENTE}
 REAL_OCT_EXP    "%"{NUM_OCTAL}|{REAL_OCTAL}{EXPONENTE}
 REAL_HEX_EXP    "%[hH]"{NUM_HEXADECIMAL}?","{NUM_HEXADECIMAL}"exp"[-+]?{NUM_HEXADECIMAL}
 
-CARACTER_VISIBLE    [^"\n%]  
+CARACTER_VISIBLE [^\n"%áéíóúÁÉÍÓÚñÑüÜ]
 ESCAPADO  %(\'|\"|%|n|r|t)
 
 
@@ -36,9 +36,21 @@ CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"
 
 CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
-IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
+IDENTIFICADOR  [A-Za-záéíóúÁÉÍÓÚñÑüÜ_][A-Za-záéíóúÁÉÍÓÚñÑüÜ_0-9]*
 
 %%
+
+"%%".*                     { printf("linea %d, comentario de línea: %s\n", yylineno, yytext); }
+
+
+"%/"                       { printf("linea %d, inicio de comentario multilínea\n", yylineno); BEGIN(COMENTARIO); }
+
+
+<COMENTARIO>[^%\n]+        { printf("linea %d, dentro de comentario multilínea: %s\n", yylineno, yytext); }
+<COMENTARIO>"%"            { printf("linea %d, dentro de comentario multilínea: %s\n", yylineno, yytext); }
+<COMENTARIO>\n             { yylineno++; printf("linea %d, dentro de comentario multilínea (nueva línea)\n", yylineno); }
+<COMENTARIO>"%/"           { printf("linea %d, fin de comentario multilínea\n", yylineno); BEGIN(INITIAL); }
+
 
 [ \t\r\n]+       ;
 
@@ -109,7 +121,6 @@ IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
 {ESCAPADO}         {printf("linea %d, caracter escapado: %s\n" , yylineno, yytext); return CARACTER;}
 {CARACTER_OCTAL}   {printf("linea %d, caracter octal: %s\n" , yylineno, yytext); return CARACTER;}
 {CARACTER_HEXA}    {printf("linea %d, caracter hexadecimal: %s\n" , yylineno, yytext); return CARACTER;}
-{CADENA}           {printf("linea %d, cadena: %s\n" , yylineno, yytext); return CADENA;}
 
 
 "("             {printf("linea %d, delimitador: %s \n", yylineno, yytext); return (int)yytext[0];}
@@ -172,14 +183,9 @@ IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
 {IDENTIFICADOR} {printf("linea %d, identificador: %s\n", yylineno, yytext); return IDENTIFICADOR;}
 {CARACTER_VISIBLE} {printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
 
-"%/"          BEGIN(COMENTARIO);
-<COMENTARIO>.|\n ;  
-<COMENTARIO>"/%" BEGIN(0);
-
-"%%".*        ;  
 
 
-
+{CADENA}      {printf("linea %d, cadena: %s\n", yylineno, yytext); return CADENA;}
 
 .             { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 %%
