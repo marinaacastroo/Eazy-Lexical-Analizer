@@ -7,7 +7,6 @@
 
 %s COMENTARIO
 
-IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
 
 NUM_DECIMAL     [0-9]+
 NUM_OCTAL       [0-7]+
@@ -26,7 +25,7 @@ EXPONENTE       "exp"[-+]?({NUM_DECIMAL}|"%"{NUM_OCTAL}|"%[hH]"{NUM_HEXADECIMAL}
 
 REAL_DEC_EXP    ({NUM_DECIMAL}|{REAL_DECIMAL}){EXPONENTE}
 REAL_OCT_EXP    "%"{NUM_OCTAL}|{REAL_OCTAL}{EXPONENTE}
-REAL_HEX_EXP    "%[hH]"{NUM_HEXADECIMAL}|{REAL_HEXADECIMAL}{EXPONENTE}
+REAL_HEX_EXP    "%[hH]"{NUM_HEXADECIMAL}?","{NUM_HEXADECIMAL}"exp"[-+]?{NUM_HEXADECIMAL}
 
 CARACTER_VISIBLE    [^"\n%]  
 ESCAPADO  %(\'|\"|%|n|r|t)
@@ -37,6 +36,7 @@ CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"
 
 CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
+IDENTIFICADOR  [A-Za-z_][A-Za-z_0-9]*
 
 %%
 
@@ -99,7 +99,7 @@ CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
 {CONST_DECIMAL}    {printf("linea %d, constante entera: %s\n" , yylineno, yytext); return CTC_ENTERA;}
 {CONST_OCTAL}      {printf("linea %d, constante entera: %s\n" , yylineno, yytext); return CTC_ENTERA;}
-{CONST_HEXADECIMAL} {printf("linea %d, constante entera: %s\n" , yylineno, yytext); return CTC_ENTERA;}
+{CONST_HEXADECIMAL} {printf("linea %d, constante entera: %s\n", yylineno, yytext); return CTC_ENTERA;}
 {REAL_DECIMAL}     {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
 {REAL_OCTAL}       {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
 {REAL_HEXADECIMAL} {printf("linea %d, constante real: %s\n" , yylineno, yytext); return CTC_REAL;}
