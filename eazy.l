@@ -175,11 +175,9 @@ IDENTIFICADOR  [A-Za-záéíóúÁÉÍÓÚñÑüÜ_][A-Za-záéíóúÁÉÍÓÚ�
 {CARACTER_VISIBLE} {printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
 
 
-
-
-"%/"                               { yymore(); BEGIN COMENTARIO; }
-<COMENTARIO>(.|\n)*?"/%"           { printf("linea %d, comentario multilínea: %s\n", yylineno, yytext); BEGIN 0; } // Captura todo el comentario hasta el cierre
-<COMENTARIO>.                      ; 
+"%/"                               { BEGIN(COMENTARIO); }
+<COMENTARIO>(.|\n)*?"/%"           { printf("linea %d, comentario multilínea: %s\n", yylineno, yytext); BEGIN(INITIAL); } // Captura todo el comentario hasta el cierre
+<COMENTARIO>.                      {  }
 
 "%%"[^\n]*                         { printf("linea %d, comentario de una sola línea: %s\n", yylineno, yytext); }
 

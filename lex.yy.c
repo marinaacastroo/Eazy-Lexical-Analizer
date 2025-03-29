@@ -367,8 +367,7 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
  */
 #define YY_DO_BEFORE_ACTION \
 	(yytext_ptr) = yy_bp; \
-	(yytext_ptr) -= (yy_more_len); \
-	yyleng = (yy_size_t) (yy_cp - (yytext_ptr)); \
+	yyleng = (yy_size_t) (yy_cp - yy_bp); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
@@ -1308,19 +1307,17 @@ int yy_flex_debug = 0;
  * any uses of REJECT which flex missed.
  */
 #define REJECT reject_used_but_not_detected
-static int yy_more_flag = 0;
-static int yy_more_len = 0;
-#define yymore() ((yy_more_flag) = 1)
-#define YY_MORE_ADJ (yy_more_len)
+#define yymore() yymore_used_but_not_detected
+#define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "eazy.l"
 #line 4 "eazy.l"
 #include <stdio.h>
 #include "eazy.h"
-#line 1321 "lex.yy.c"
+#line 1318 "lex.yy.c"
 
-#line 1323 "lex.yy.c"
+#line 1320 "lex.yy.c"
 
 #define INITIAL 0
 #define COMENTARIO 1
@@ -1544,16 +1541,10 @@ YY_DECL
 
 
 
-#line 1547 "lex.yy.c"
+#line 1544 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
-		(yy_more_len) = 0;
-		if ( (yy_more_flag) )
-			{
-			(yy_more_len) = (int) ((yy_c_buf_p) - (yytext_ptr));
-			(yy_more_flag) = 0;
-			}
 		yy_cp = (yy_c_buf_p);
 
 		/* Support of yytext. */
@@ -1599,7 +1590,7 @@ yy_find_action:
 		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
 			{
 			yy_size_t yyl;
-			for ( yyl = (yy_more_len); yyl < yyleng; ++yyl )
+			for ( yyl = 0; yyl < yyleng; ++yyl )
 				if ( yytext[yyl] == '\n' )
 					
     yylineno++;
@@ -2200,42 +2191,42 @@ YY_RULE_SETUP
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 180 "eazy.l"
-{ yymore(); BEGIN COMENTARIO; }
+#line 178 "eazy.l"
+{ BEGIN(COMENTARIO); }
 	YY_BREAK
 case 118:
 /* rule 118 can match eol */
 YY_RULE_SETUP
-#line 181 "eazy.l"
-{ printf("linea %d, comentario multilínea: %s\n", yylineno, yytext); BEGIN 0; } // Captura todo el comentario hasta el cierre
+#line 179 "eazy.l"
+{ printf("linea %d, comentario multilínea: %s\n", yylineno, yytext); BEGIN(INITIAL); } // Captura todo el comentario hasta el cierre
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 182 "eazy.l"
-; 
+#line 180 "eazy.l"
+{  }
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 184 "eazy.l"
+#line 182 "eazy.l"
 { printf("linea %d, comentario de una sola línea: %s\n", yylineno, yytext); }
 	YY_BREAK
 case 121:
 /* rule 121 can match eol */
 YY_RULE_SETUP
-#line 186 "eazy.l"
+#line 184 "eazy.l"
 { printf("linea %d, cadena: %s\n", yylineno, yytext); return CADENA; }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 188 "eazy.l"
+#line 186 "eazy.l"
 { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 189 "eazy.l"
+#line 187 "eazy.l"
 ECHO;
 	YY_BREAK
-#line 2238 "lex.yy.c"
+#line 2229 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMENTARIO):
 	yyterminate();
@@ -3253,7 +3244,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 189 "eazy.l"
+#line 187 "eazy.l"
 
 
 
