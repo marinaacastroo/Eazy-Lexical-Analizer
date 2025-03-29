@@ -180,7 +180,6 @@ CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
 
 
-[ \t\n]+      ;
 
 .             { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 %%
