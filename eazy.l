@@ -6,6 +6,8 @@
 %}
 
 %s COMENTARIO
+%x MULTILINE
+
 
 
 NUM_DECIMAL     [0-9]+
@@ -44,6 +46,13 @@ IDENTIFICADOR  [A-Za-záéíóúÁÉÍÓÚñÑüÜ_][A-Za-záéíóúÁÉÍÓÚ�
 
 
 [ \t\r\n]+       ;
+
+"%%".*   { printf("linea %d, comentario: %s\n", yylineno, yytext); }
+"%/"          { BEGIN(MULTILINE); }
+<MULTILINE>"/%"  { BEGIN(INITIAL); }
+<MULTILINE>\n    { yylineno++; }
+<MULTILINE>.     { }
+
 
 (?i:"abstracto")     {printf("linea %d, palabra reservada: ABSTRACTO\n" , yylineno); return ABSTRACTO;}
 (?i:"cada")          {printf("linea %d, palabra reservada: CADA\n" , yylineno); return CADA;}
@@ -175,11 +184,6 @@ IDENTIFICADOR  [A-Za-záéíóúÁÉÍÓÚñÑüÜ_][A-Za-záéíóúÁÉÍÓÚ�
 {CARACTER_VISIBLE} {printf("linea %d, caracter: %s\n" , yylineno, yytext); return CARACTER;}
 
 
-"%/"                               { BEGIN(COMENTARIO); }
-<COMENTARIO>(.|\n)*?"/%"           { printf("linea %d, comentario multilínea: %s\n", yylineno, yytext); BEGIN(INITIAL); } // Captura todo el comentario hasta el cierre
-<COMENTARIO>.                      {  }
-
-"%%"[^\n]*                         { printf("linea %d, comentario de una sola línea: %s\n", yylineno, yytext); }
 
 {CADENA}                           { printf("linea %d, cadena: %s\n", yylineno, yytext); return CADENA; }
 
