@@ -40,16 +40,7 @@ IDENTIFICADOR  [A-Za-záéíóúÁÉÍÓÚñÑüÜ_][A-Za-záéíóúÁÉÍÓÚ�
 
 %%
 
-"%%".*                     { printf("linea %d, comentario de línea: %s\n", yylineno, yytext); }
 
-
-"%/"                       { printf("linea %d, inicio de comentario multilínea\n", yylineno); BEGIN(COMENTARIO); }
-
-
-<COMENTARIO>[^%\n]+        { printf("linea %d, dentro de comentario multilínea: %s\n", yylineno, yytext); }
-<COMENTARIO>"%"            { printf("linea %d, dentro de comentario multilínea: %s\n", yylineno, yytext); }
-<COMENTARIO>\n             { yylineno++; printf("linea %d, dentro de comentario multilínea (nueva línea)\n", yylineno); }
-<COMENTARIO>"%/"           { printf("linea %d, fin de comentario multilínea\n", yylineno); BEGIN(INITIAL); }
 
 
 [ \t\r\n]+       ;
@@ -185,9 +176,16 @@ IDENTIFICADOR  [A-Za-záéíóúÁÉÍÓÚñÑüÜ_][A-Za-záéíóúÁÉÍÓÚ�
 
 
 
-{CADENA}      {printf("linea %d, cadena: %s\n", yylineno, yytext); return CADENA;}
 
-.             { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
+"%/"                               { yymore(); BEGIN COMENTARIO; }
+<COMENTARIO>(.|\n)*?"/%"           { printf("linea %d, comentario multilínea: %s\n", yylineno, yytext); BEGIN 0; } // Captura todo el comentario hasta el cierre
+<COMENTARIO>.                      ; 
+
+"%%"[^\n]*                         { printf("linea %d, comentario de una sola línea: %s\n", yylineno, yytext); }
+
+{CADENA}                           { printf("linea %d, cadena: %s\n", yylineno, yytext); return CADENA; }
+
+.                                  { fprintf(stdout, "ERROR en línea %d: carácter inesperado '%s'\n", yylineno, yytext); }
 %%
 
 
