@@ -1173,7 +1173,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 50 "eazy.l"
-{ printf("linea %d, comentario : %s\n", yylineno, yytext); }
+{ printf("linea %d, comentario: %s\n", yylineno, yytext); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
@@ -1189,12 +1189,12 @@ case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
 #line 53 "eazy.l"
-{ yylineno++; }
+{  }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 54 "eazy.l"
-{ printf("linea %d, comentarioooooooooooooooooooo : %s\n", yylineno, yytext);  }
+{ }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
