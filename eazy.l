@@ -47,7 +47,7 @@ IDENTIFICADOR  [A-Za-záéíóúÁÉÍÓÚñÑüÜ_][A-Za-záéíóúÁÉÍÓÚ�
 
 [ \t\r\n]+       ;
 
-"%%".*   { printf("linea %d, comentario: %s\n", yylineno, yytext); }
+"%%".*   { }
 "%/"          { BEGIN(MULTILINE); }
 <MULTILINE>"/%"  { BEGIN(INITIAL); }
 <MULTILINE>\n    {  }
