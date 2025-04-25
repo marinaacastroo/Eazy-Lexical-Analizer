@@ -30,12 +30,10 @@ REAL_OCT_EXP    "%"{NUM_OCTAL}|{REAL_OCTAL}{EXPONENTE}
 REAL_HEX_EXP    "%[hH]"{NUM_HEXADECIMAL}?","{NUM_HEXADECIMAL}"exp"[-+]?{NUM_HEXADECIMAL}
 
 CARACTER_VISIBLE [^\n"%áéíóúÁÉÍÓÚñÑüÜ]
-ESCAPADO  %(\'|\"|%|n|r|t)
+ESCAPADO         %(\'|\"|%|n|r|t|\n)
 
-
-CARACTER_OCTAL "%([0-7]{1,2}|1[0-7]{2})"
-CARACTER_HEXA "%[hH]([0-7][0-9a-fA-F]?)"   
-//TODO: añadir salto de linea y escapado en caracter (primer punto de caracteres)
+CARACTER_OCTAL   "%([0-7]{1,2}|1[0-7]{2})"
+CARACTER_HEXA    "%[hH]([0-7][0-9a-fA-F]?)"
 CADENA  \"([^\n"]|{ESCAPADO}|CARACTER_OCTAL|CARACTER_HEXA|"%"\n)*\"
 
 IDENTIFICADOR  [A-Za-záéíóúÁÉÍÓÚñÑüÜ_][A-Za-záéíóúÁÉÍÓÚñÑüÜ_0-9]*
